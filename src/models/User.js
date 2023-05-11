@@ -8,6 +8,7 @@ const UserModel = (sequelize, DataTypes) => {
         id: { 
             type: DataTypes.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
         },
         display_name: DataTypes.STRING,
         email: DataTypes.STRING,
@@ -17,6 +18,7 @@ const UserModel = (sequelize, DataTypes) => {
     {
         timestamps: false,
         underscored: false,
+        tableName: 'users'
     });
 
     return User;
