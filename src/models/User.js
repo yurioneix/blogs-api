@@ -10,14 +10,14 @@ const UserModel = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true,
         },
-        display_name: DataTypes.STRING,
+        displayName: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.STRING,
         image: DataTypes.STRING,
     }, 
     {
         timestamps: false,
-        underscored: false,
+        underscored: true,
         tableName: 'users'
     });
 

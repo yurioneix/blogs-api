@@ -20,15 +20,39 @@ const getUserLogin = async (req, res) => {
         };
     
         const token = jwt.sign({ data: { email } }, secret, jwtConfig);
-        console.log('token', typeof token);
+
         return res.status(200).json({ token });
     } catch (error) {
-        return res.status(400).json({
-            message: 'Some required fields are missing',
-          });
+            return res.status(400).json({ message: 'Some required fields are missing' });
+        }
+};
+
+const createUser = async (req, res) => {
+    const user = req.body;
+
+    const verifyExistingEmail = await UserService.getByEmail(user.email);
+
+    if (verifyExistingEmail) {
+        return res.status(409).json({
+            message: 'User already registered',
+        }); 
     }
+
+    await UserService.createUser(user);
+
+    const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
+
+    const { displayName, email, password, image } = user;
+    const token = jwt.sign({ data: { 
+        displayName, 
+        email, 
+        password,
+        image } }, secret, jwtConfig);
+
+    return res.status(201).json({ token });
 };
 
 module.exports = {
     getUserLogin,
+    createUser, 
 };
