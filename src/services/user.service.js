@@ -13,7 +13,7 @@ const getByEmail = async (email) => {
 };
 
 const getByID = async (id) => {
-    const getUser = await User.findOne({ where: { id } });
+    const getUser = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
     
     return getUser;
 };
