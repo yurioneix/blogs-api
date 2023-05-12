@@ -11,6 +11,11 @@ const CategoryModel = (sequelize, DataTypes) => {
             autoIncrement: true,
         },
         name: DataTypes.STRING,
+    }, 
+    {
+        timestamps: false,
+        underscored: true,
+        tableName: 'categories'
     })
     return Category;
 };
