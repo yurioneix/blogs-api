@@ -10,8 +10,6 @@ const getUserLogin = async (req, res) => {
         
         const userLogin = await UserService.getByEmailAndPassword(email, password);
     
-        console.log('userLogin', userLogin);
-    
         if (!userLogin) return res.status(400).json({ message: 'Invalid fields' });
     
         const jwtConfig = { 
@@ -42,11 +40,10 @@ const createUser = async (req, res) => {
 
     const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
 
-    const { displayName, email, password, image } = newUser;
+    const { displayName, email, image } = newUser;
     const token = jwt.sign({ data: { 
         displayName, 
         email, 
-        password,
         image } }, secret, jwtConfig);
 
     return res.status(201).json({ token });

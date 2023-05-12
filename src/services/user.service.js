@@ -18,7 +18,8 @@ const getByID = async (id) => {
     return getUser;
 };
 
-const getUsers = () => User.findAll();
+const getUsers = () => User.findAll({ attributes: { exclude: ['password'] },
+});
 
 const createUser = async (user) => {
     const {
