@@ -28,9 +28,9 @@ const getUserLogin = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-    const user = req.body;
+    const newUser = req.body;
 
-    const verifyExistingEmail = await UserService.getByEmail(user.email);
+    const verifyExistingEmail = await UserService.getByEmail(newUser.email);
 
     if (verifyExistingEmail) {
         return res.status(409).json({
@@ -38,11 +38,11 @@ const createUser = async (req, res) => {
         }); 
     }
 
-    await UserService.createUser(user);
+    await UserService.createUser(newUser);
 
     const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
 
-    const { displayName, email, password, image } = user;
+    const { displayName, email, password, image } = newUser;
     const token = jwt.sign({ data: { 
         displayName, 
         email, 
@@ -52,7 +52,20 @@ const createUser = async (req, res) => {
     return res.status(201).json({ token });
 };
 
+const getUsers = async (req, res) => {
+    try {
+        const users = await UserService.getUsers();
+
+        if (!users) throw new Error();
+
+        return res.status(200).json(users);
+    } catch (e) {
+        return res.status(404).json({ message: e.message });
+    }
+};
+
 module.exports = {
     getUserLogin,
-    createUser, 
+    createUser,
+    getUsers, 
 };

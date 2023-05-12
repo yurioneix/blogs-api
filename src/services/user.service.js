@@ -8,9 +8,17 @@ const getByEmailAndPassword = async (email, password) => {
 
 const getByEmail = async (email) => {
     const getUserByEmail = await User.findOne({ where: { email } });
-    console.log('getuserbyemail', getUserByEmail);
+
     return getUserByEmail;
 };
+
+const getByID = async (id) => {
+    const getUser = await User.findOne({ where: { id } });
+    
+    return getUser;
+};
+
+const getUsers = () => User.findAll();
 
 const createUser = async (user) => {
     const {
@@ -31,4 +39,4 @@ const createUser = async (user) => {
     return newUser;
 };
 
-module.exports = { getByEmailAndPassword, getByEmail, createUser };
+module.exports = { getByEmailAndPassword, getByEmail, createUser, getByID, getUsers };
