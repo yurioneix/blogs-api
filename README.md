@@ -79,6 +79,8 @@ Projeto desenvolvido no módulo de Backend, onde foi criado uma API Resftul de u
     ```
 </details> 
 
+<br>
+
 - <strong> POST `/user` </strong>
 
 <details>
@@ -131,6 +133,8 @@ Projeto desenvolvido no módulo de Backend, onde foi criado uma API Resftul de u
       ```
 </details>
 
+<br>
+
 - <strong> GET `/user` </strong>
 
 <details>
@@ -165,5 +169,158 @@ Projeto desenvolvido no módulo de Backend, onde foi criado uma API Resftul de u
     /* ... */
   ]
   ```
+</details>
+
+<br>
+
+- <strong> GET `/user/:id`</strong>
+
+<details>
+  <summary>Busca um usuário do Blog pelo seu id</summary>
+
+  - Necessário fornecer um token autenticado no cabeçalho da requisição, no campo "Authorization" para acessar a rota.
+
+  - Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+    ```json
+    {
+      "message": "Token not found"
+    }
+    ```
+    
+  - Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+    ```json
+    {
+      "message": "Expired or invalid token"
+    }
+    ```
+
+  - Se o usuário for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `404`:
+    ```json
+    {
+      "message": "User does not exist"
+    }
+    ```
+
+  - Ao listar um usuário com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+    ```json
+    {
+      "id": 1,
+      "displayName": "Lewis Hamilton",
+      "email": "lewishamilton@gmail.com",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+    }
+    ```
+</details>
+
+<br>
+
+- <strong> POST `/categories` </strong>
+
+<details>
+  <summary>Cria uma categoria de post do Blog</summary>
+
+  - O corpo da requisição deverá seguir o formato abaixo:
+    ```json
+    {
+      "name": "Typescript"
+    }
+    ```
+
+  - Se a requisição não tiver o campo `name` devidamente preenchidos(não pode haver campo em branco), o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+    ```json
+    {
+      "message": "\"name\" is required"
+    }
+    ```
+
+- Se a categoria for criada com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `201`:
+    ```json
+    {
+      "id": 3,
+      "name": "Typescript"
+    }
+    ```
+</details>
+
+<br>
+
+- <strong> GET `/categories` </strong>
+
+<details>
+  <summary>Lista todas as categorias de posts cadastrados no Blog</summary>
+
+  - Necessário fornecer um token autenticado no cabeçalho da requisição, no campo "Authorization" para acessar a rota.
+
+  - Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+    ```json
+    {
+      "message": "Token not found"
+    }
+    ```
+    
+  - Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+    ```json
+    {
+      "message": "Expired or invalid token"
+    }
+    ```
+    
+   - Ao listar categorias com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `200`:
+  ```json
+          [
+            {
+                "id": 1,
+                "name": "Inovação"
+            },
+            {
+                "id": 2,
+                "name": "Escola"
+            },
+   
+            /* ... */
+          ]
+  ```
+</details>
+
+<br>
+
+- <strong> POST `/post` </strong>
+
+<details>
+  <summary>Cria um post para o Blog</summary>
+
+  - O corpo da requisição deverá seguir o formato abaixo:
+  ```json
+  {
+    "title": "Latest updates, August 1st",
+    "content": "The whole text for the blog post goes here in this key",
+    "categoryIds": [1, 2]
+  }
+  ```
+
+  - Se a requisição não tiver todos os campos devidamente preenchidos(não pode haver campos em branco), o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+      ```json
+      {
+        "message": "Some required fields are missing"
+      }
+      ```
+  - Se a requisição **não** tiver o campo `categoryIds` devidamente preenchido com um array com **todas** as categorias existentes, o resultado retornado deverá ser conforme exibido abaixo, com um status http `400`:
+    ```json
+    {
+      "message": "one or more \"categoryIds\" not found"
+    }
+    ```
+
+ - Se o blog post for criado com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `201`:
+    ```json
+    {
+      "id": 3,
+      "title": "Latest updates, August 1st",
+      "content": "The whole text for the blog post goes here in this key",
+      "userId": 1,
+      "updated": "2022-05-18T18:00:01.196Z",
+      "published": "2022-05-18T18:00:01.196Z"
+    }
+    ```
 
 </details>
