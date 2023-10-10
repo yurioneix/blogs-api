@@ -324,3 +324,16 @@ Projeto desenvolvido no módulo de Backend, onde foi criado uma API Resftul de u
     ```
 
 </details>
+
+## Pastas/arquivos desenvolvidos por mim
+
+```bash
+  src/app.js
+  src/auth
+  src/controllers
+  src/middlewares
+  src/migrations
+  src/models
+  src/routers
+  src/services
+```
